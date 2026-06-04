@@ -28,6 +28,15 @@ issuebench init tasks/qwen-copy \
   --test "npm test -- copyCommand.test.ts"
 ```
 
+Or generate a tiny runnable demo first:
+
+```bash
+issuebench demo demo-task
+issuebench run demo-task/task --repo demo-task/buggy_repo --out before.json
+issuebench run demo-task/task --repo demo-task/fixed_repo --out after.json
+issuebench score demo-task/task --before before.json --after after.json
+```
+
 Run the task against a candidate checkout:
 
 ```bash
@@ -72,6 +81,7 @@ Use SWE-bench for public comparison. Use IssueBenchKit when you need:
 The first version is intentionally small:
 
 - generic shell test commands
+- a built-in runnable demo workspace
 - JSON manifest files
 - before/after scoring
 - JSONL and single-file HTML export

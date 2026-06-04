@@ -32,6 +32,15 @@ issuebench init tasks/qwen-copy \
   --test "npm test -- copyCommand.test.ts"
 ```
 
+也可以先生成一个可运行的小 demo：
+
+```bash
+issuebench demo demo-task
+issuebench run demo-task/task --repo demo-task/buggy_repo --out before.json
+issuebench run demo-task/task --repo demo-task/fixed_repo --out after.json
+issuebench score demo-task/task --before before.json --after after.json
+```
+
 对候选修复运行验证：
 
 ```bash
@@ -62,6 +71,7 @@ issuebench export tasks/qwen-copy --format html --out report.html
 第一版只做稳定的 MVP：
 
 - 通用 shell 验证命令
+- 内置可运行 demo workspace
 - `issuebench.json` 任务清单
 - before / after 评分
 - JSONL 和单文件 HTML 报告

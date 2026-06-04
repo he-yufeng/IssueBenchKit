@@ -9,6 +9,7 @@ from rich.console import Console
 from rich.table import Table
 
 from issuebenchkit import __version__
+from issuebenchkit.demo import create_demo_workspace
 from issuebenchkit.export import export_html, export_jsonl
 from issuebenchkit.runner import run_task
 from issuebenchkit.score import load_result, save_result, score_results
@@ -55,6 +56,26 @@ def init_cmd(
     )
     console.print(f"[green]Created task:[/green] {manifest_path(task_dir)}")
     console.print(f"[dim]{manifest.name}: {manifest.expected_signal}[/dim]")
+
+
+@main.command("demo")
+@click.argument("output_dir", type=click.Path(file_okay=False))
+def demo_cmd(output_dir: str) -> None:
+    """Create a tiny runnable demo task with buggy and fixed repos."""
+    paths = create_demo_workspace(output_dir)
+    console.print(f"[green]Created demo workspace:[/green] {paths['root']}")
+    console.print(f"Task: {paths['task']}")
+    console.print(f"Buggy repo: {paths['buggy_repo']}")
+    console.print(f"Fixed repo: {paths['fixed_repo']}")
+    console.print()
+    console.print("[bold]Try it:[/bold]")
+    console.print(
+        f"  issuebench run {paths['task']} --repo {paths['buggy_repo']} --out before.json"
+    )
+    console.print(
+        f"  issuebench run {paths['task']} --repo {paths['fixed_repo']} --out after.json"
+    )
+    console.print(f"  issuebench score {paths['task']} --before before.json --after after.json")
 
 
 @main.command("inspect")
