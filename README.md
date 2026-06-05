@@ -55,6 +55,13 @@ Export a report:
 issuebench export tasks/qwen-copy --format html --out report.html
 ```
 
+Create a coding-agent context pack:
+
+```bash
+issuebench context tasks/qwen-copy --result after.json --out qwen-copy-context.md
+patchcontext scan --repo ./qwen-code --issue qwen-copy-context.md
+```
+
 ## What It Stores
 
 Each task directory contains one `issuebench.json` manifest:
@@ -85,6 +92,7 @@ The first version is intentionally small:
 - JSON manifest files
 - before/after scoring
 - JSONL and single-file HTML export
+- Markdown context packs for coding agents and PatchContext
 
 It does not generate tests automatically, mutate repositories, or claim that one command can
 evaluate every language ecosystem.

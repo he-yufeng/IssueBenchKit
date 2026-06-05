@@ -46,3 +46,36 @@ def test_cli_demo_creates_runnable_before_after(tmp_path):
 
     assert before.passed is False
     assert after.passed is True
+
+
+def test_cli_context_exports_task_pack(tmp_path):
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    task = tmp_path / "task"
+    runner = CliRunner()
+
+    result = runner.invoke(
+        main,
+        [
+            "init",
+            str(task),
+            "--repo",
+            str(repo),
+            "--test",
+            "python check.py",
+            "--expected",
+            "check.py passes",
+            "--note",
+            "Traceback points to src/app.py",
+        ],
+    )
+    assert result.exit_code == 0
+
+    out = tmp_path / "context.md"
+    result = runner.invoke(main, ["context", str(task), "--out", str(out)])
+
+    assert result.exit_code == 0
+    text = out.read_text(encoding="utf-8")
+    assert "# IssueBench task context: task" in text
+    assert "python check.py" in text
+    assert "src/app.py" in text

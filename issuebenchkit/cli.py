@@ -9,6 +9,7 @@ from rich.console import Console
 from rich.table import Table
 
 from issuebenchkit import __version__
+from issuebenchkit.context import export_context_pack
 from issuebenchkit.demo import create_demo_workspace
 from issuebenchkit.export import export_html, export_jsonl
 from issuebenchkit.runner import run_task
@@ -153,3 +154,16 @@ def export_cmd(task_dir: str, result: str | None, fmt: str, out: str | None) -> 
         score = score_results(None, run_result) if run_result else None
         export_html(manifest, run_result, output, score=score)
     console.print(f"[green]Wrote:[/green] {output}")
+
+
+@main.command("context")
+@click.argument("task_dir", type=click.Path(file_okay=False, exists=True))
+@click.option("--result", type=click.Path(dir_okay=False), help="Optional run-result JSON.")
+@click.option("--out", type=click.Path(dir_okay=False), help="Output Markdown path.")
+def context_cmd(task_dir: str, result: str | None, out: str | None) -> None:
+    """Export a Markdown task pack for coding agents."""
+    manifest = load_manifest(task_dir)
+    run_result = load_result(result) if result else None
+    output = out or f"{Path(task_dir).name}-context.md"
+    export_context_pack(manifest, output, result=run_result)
+    console.print(f"[green]Wrote context pack:[/green] {output}")

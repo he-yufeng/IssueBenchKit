@@ -59,6 +59,15 @@ issuebench score tasks/qwen-copy --before before.json --after after.json
 issuebench export tasks/qwen-copy --format html --out report.html
 ```
 
+导出给 coding agent 看的任务上下文：
+
+```bash
+issuebench context tasks/qwen-copy --result after.json --out qwen-copy-context.md
+patchcontext scan --repo ./qwen-code --issue qwen-copy-context.md
+```
+
+`context` 命令会把任务约束、验证命令、notes 和可选的运行结果整理成 Markdown。它适合作为第一轮提示词材料，也可以交给 PatchContext 继续筛选最相关的代码文件。
+
 ## 适合谁
 
 - 想给 coding agent 做私有题库的工程师
@@ -75,6 +84,7 @@ issuebench export tasks/qwen-copy --format html --out report.html
 - `issuebench.json` 任务清单
 - before / after 评分
 - JSONL 和单文件 HTML 报告
+- 给 coding agent / PatchContext 用的 Markdown 任务上下文
 
 它不会自动生成测试，也不会自动修改你的仓库。这个边界是故意保留的：benchmark 最重要的是可信，而不是看起来很“自动化”。
 
