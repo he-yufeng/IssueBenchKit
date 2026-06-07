@@ -15,6 +15,7 @@ from issuebenchkit.export import export_html, export_jsonl
 from issuebenchkit.runner import run_task
 from issuebenchkit.score import load_result, save_result, score_results
 from issuebenchkit.task import init_manifest, load_manifest, manifest_path
+from issuebenchkit.validate import validate_task, validation_markdown
 
 console = Console()
 
@@ -167,3 +168,33 @@ def context_cmd(task_dir: str, result: str | None, out: str | None) -> None:
     output = out or f"{Path(task_dir).name}-context.md"
     export_context_pack(manifest, output, result=run_result)
     console.print(f"[green]Wrote context pack:[/green] {output}")
+
+
+@main.command("validate")
+@click.argument("task_dir", type=click.Path(file_okay=False, exists=True))
+@click.option("--before-repo", type=click.Path(file_okay=False), help="Known-buggy repo path.")
+@click.option("--after-repo", type=click.Path(file_okay=False), help="Known-fixed repo path.")
+@click.option("--timeout", default=600, show_default=True, help="Command timeout in seconds.")
+@click.option("--out", type=click.Path(dir_okay=False), help="Write a Markdown validation report.")
+def validate_cmd(
+    task_dir: str,
+    before_repo: str | None,
+    after_repo: str | None,
+    timeout: int,
+    out: str | None,
+) -> None:
+    """Validate a task manifest and optional before/after repos."""
+    report = validate_task(
+        task_dir,
+        before_repo=before_repo,
+        after_repo=after_repo,
+        timeout=timeout,
+    )
+    markdown = validation_markdown(report)
+    if out:
+        Path(out).write_text(markdown, encoding="utf-8")
+        console.print(f"[green]Wrote validation report:[/green] {out}")
+    else:
+        console.print(markdown)
+    if not report.passed:
+        raise click.ClickException("task validation failed")

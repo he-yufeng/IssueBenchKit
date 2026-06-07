@@ -35,6 +35,7 @@ issuebench demo demo-task
 issuebench run demo-task/task --repo demo-task/buggy_repo --out before.json
 issuebench run demo-task/task --repo demo-task/fixed_repo --out after.json
 issuebench score demo-task/task --before before.json --after after.json
+issuebench validate demo-task/task --before-repo demo-task/buggy_repo --after-repo demo-task/fixed_repo --out validation.md
 ```
 
 Run the task against a candidate checkout:
@@ -91,6 +92,7 @@ The first version is intentionally small:
 - a built-in runnable demo workspace
 - JSON manifest files
 - before/after scoring
+- task validation that proves before fails and after passes
 - JSONL and single-file HTML export
 - Markdown context packs for coding agents and PatchContext
 

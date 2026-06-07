@@ -39,6 +39,7 @@ issuebench demo demo-task
 issuebench run demo-task/task --repo demo-task/buggy_repo --out before.json
 issuebench run demo-task/task --repo demo-task/fixed_repo --out after.json
 issuebench score demo-task/task --before before.json --after after.json
+issuebench validate demo-task/task --before-repo demo-task/buggy_repo --after-repo demo-task/fixed_repo --out validation.md
 ```
 
 对候选修复运行验证：
@@ -83,6 +84,7 @@ patchcontext scan --repo ./qwen-code --issue qwen-copy-context.md
 - 内置可运行 demo workspace
 - `issuebench.json` 任务清单
 - before / after 评分
+- `validate` 任务质量门禁：证明 before 失败、after 通过
 - JSONL 和单文件 HTML 报告
 - 给 coding agent / PatchContext 用的 Markdown 任务上下文
 
