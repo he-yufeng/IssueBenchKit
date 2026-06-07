@@ -10,7 +10,7 @@ from rich.table import Table
 
 from issuebenchkit import __version__
 from issuebenchkit.context import export_context_pack
-from issuebenchkit.demo import create_demo_workspace
+from issuebenchkit.demo import DEMO_KINDS, create_all_demo_workspaces, create_demo_workspace
 from issuebenchkit.export import export_html, export_jsonl
 from issuebenchkit.runner import run_task
 from issuebenchkit.score import load_result, save_result, score_results
@@ -62,22 +62,24 @@ def init_cmd(
 
 @main.command("demo")
 @click.argument("output_dir", type=click.Path(file_okay=False))
-def demo_cmd(output_dir: str) -> None:
-    """Create a tiny runnable demo task with buggy and fixed repos."""
-    paths = create_demo_workspace(output_dir)
-    console.print(f"[green]Created demo workspace:[/green] {paths['root']}")
-    console.print(f"Task: {paths['task']}")
-    console.print(f"Buggy repo: {paths['buggy_repo']}")
-    console.print(f"Fixed repo: {paths['fixed_repo']}")
-    console.print()
-    console.print("[bold]Try it:[/bold]")
-    console.print(
-        f"  issuebench run {paths['task']} --repo {paths['buggy_repo']} --out before.json"
-    )
-    console.print(
-        f"  issuebench run {paths['task']} --repo {paths['fixed_repo']} --out after.json"
-    )
-    console.print(f"  issuebench score {paths['task']} --before before.json --after after.json")
+@click.option(
+    "--kind",
+    type=click.Choice(DEMO_KINDS),
+    default="python",
+    show_default=True,
+    help="Demo task kind.",
+)
+@click.option("--all", "all_demos", is_flag=True, help="Create every demo kind.")
+def demo_cmd(output_dir: str, kind: str, all_demos: bool) -> None:
+    """Create runnable demo tasks with buggy and fixed repos."""
+    if all_demos:
+        workspaces = create_all_demo_workspaces(output_dir)
+        for demo_kind, paths in workspaces.items():
+            _print_demo_workspace(paths, label=demo_kind)
+        return
+
+    paths = create_demo_workspace(output_dir, kind=kind)
+    _print_demo_workspace(paths, label=kind)
 
 
 @main.command("inspect")
@@ -198,3 +200,19 @@ def validate_cmd(
         console.print(markdown)
     if not report.passed:
         raise click.ClickException("task validation failed")
+
+
+def _print_demo_workspace(paths: dict[str, Path], *, label: str) -> None:
+    console.print(f"[green]Created {label} demo workspace:[/green] {paths['root']}")
+    console.print(f"Task: {paths['task']}")
+    console.print(f"Buggy repo: {paths['buggy_repo']}")
+    console.print(f"Fixed repo: {paths['fixed_repo']}")
+    console.print()
+    console.print("[bold]Try it:[/bold]")
+    console.print(
+        f"  issuebench run {paths['task']} --repo {paths['buggy_repo']} --out before.json"
+    )
+    console.print(
+        f"  issuebench run {paths['task']} --repo {paths['fixed_repo']} --out after.json"
+    )
+    console.print(f"  issuebench score {paths['task']} --before before.json --after after.json")

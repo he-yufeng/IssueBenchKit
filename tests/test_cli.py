@@ -48,6 +48,33 @@ def test_cli_demo_creates_runnable_before_after(tmp_path):
     assert after.passed is True
 
 
+def test_cli_demo_kinds_cover_javascript_and_real_pr(tmp_path):
+    runner = CliRunner()
+
+    for kind in ("javascript", "mcp-pr"):
+        demo_root = tmp_path / kind
+        result = runner.invoke(main, ["demo", str(demo_root), "--kind", kind])
+        assert result.exit_code == 0, result.output
+
+        before = run_task(demo_root / "task", repo=demo_root / "buggy_repo", timeout=30)
+        after = run_task(demo_root / "task", repo=demo_root / "fixed_repo", timeout=30)
+
+        assert before.passed is False
+        assert after.passed is True
+
+
+def test_cli_demo_all_creates_each_kind(tmp_path):
+    runner = CliRunner()
+    demo_root = tmp_path / "all"
+
+    result = runner.invoke(main, ["demo", str(demo_root), "--all"])
+
+    assert result.exit_code == 0, result.output
+    assert (demo_root / "python" / "task" / "issuebench.json").exists()
+    assert (demo_root / "javascript" / "task" / "issuebench.json").exists()
+    assert (demo_root / "mcp-pr" / "task" / "issuebench.json").exists()
+
+
 def test_cli_context_exports_task_pack(tmp_path):
     repo = tmp_path / "repo"
     repo.mkdir()

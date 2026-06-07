@@ -28,7 +28,7 @@ issuebench init tasks/qwen-copy \
   --test "npm test -- copyCommand.test.ts"
 ```
 
-Or generate a tiny runnable demo first:
+Or generate runnable demos first:
 
 ```bash
 issuebench demo demo-task
@@ -37,6 +37,19 @@ issuebench run demo-task/task --repo demo-task/fixed_repo --out after.json
 issuebench score demo-task/task --before before.json --after after.json
 issuebench validate demo-task/task --before-repo demo-task/buggy_repo --after-repo demo-task/fixed_repo --out validation.md
 ```
+
+The built-in demos cover more than a toy Python case:
+
+```bash
+issuebench demo demo-python --kind python
+issuebench demo demo-js --kind javascript
+issuebench demo demo-mcp --kind mcp-pr
+issuebench demo demo-gallery --all
+```
+
+- `python`: a small pytest task around a division-by-zero behavior bug.
+- `javascript`: a Node-based slugification bug that drops numeric version suffixes.
+- `mcp-pr`: a distilled real contribution around rejecting duplicate MCP `initialize` calls.
 
 Run the task against a candidate checkout:
 
@@ -89,7 +102,7 @@ Use SWE-bench for public comparison. Use IssueBenchKit when you need:
 The first version is intentionally small:
 
 - generic shell test commands
-- a built-in runnable demo workspace
+- built-in runnable demo workspaces for Python, JavaScript, and a distilled real MCP PR
 - JSON manifest files
 - before/after scoring
 - task validation that proves before fails and after passes

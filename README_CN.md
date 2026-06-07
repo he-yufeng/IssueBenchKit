@@ -32,7 +32,7 @@ issuebench init tasks/qwen-copy \
   --test "npm test -- copyCommand.test.ts"
 ```
 
-也可以先生成一个可运行的小 demo：
+也可以先生成可运行 demo：
 
 ```bash
 issuebench demo demo-task
@@ -41,6 +41,19 @@ issuebench run demo-task/task --repo demo-task/fixed_repo --out after.json
 issuebench score demo-task/task --before before.json --after after.json
 issuebench validate demo-task/task --before-repo demo-task/buggy_repo --after-repo demo-task/fixed_repo --out validation.md
 ```
+
+内置 demo 不只是一个 Python 玩具例子：
+
+```bash
+issuebench demo demo-python --kind python
+issuebench demo demo-js --kind javascript
+issuebench demo demo-mcp --kind mcp-pr
+issuebench demo demo-gallery --all
+```
+
+- `python`：一个 pytest 版除零行为 bug。
+- `javascript`：一个 Node slugify bug，会错误丢掉版本号里的数字。
+- `mcp-pr`：从用户真实开源贡献中提炼的 MCP duplicate initialize 协议任务。
 
 对候选修复运行验证：
 
@@ -81,7 +94,7 @@ patchcontext scan --repo ./qwen-code --issue qwen-copy-context.md
 第一版只做稳定的 MVP：
 
 - 通用 shell 验证命令
-- 内置可运行 demo workspace
+- 内置 Python、JavaScript、真实 MCP PR 提炼版 demo workspace
 - `issuebench.json` 任务清单
 - before / after 评分
 - `validate` 任务质量门禁：证明 before 失败、after 通过
