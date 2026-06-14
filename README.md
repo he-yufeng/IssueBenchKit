@@ -105,7 +105,7 @@ The first version is intentionally small:
 - built-in runnable demo workspaces for Python, JavaScript, and a distilled real MCP PR
 - JSON manifest files
 - before/after scoring
-- task validation that proves before fails and after passes
+- task validation that proves before fails, after passes, and both runs used the same task command
 - JSONL and single-file HTML export
 - Markdown context packs for coding agents and PatchContext
 

@@ -21,7 +21,9 @@ def test_validate_demo_before_fails_after_passes(tmp_path: Path) -> None:
     assert report.passed
     assert report.before is not None and not report.before.passed
     assert report.after is not None and report.after.passed
-    assert "before-fails" in validation_markdown(report)
+    text = validation_markdown(report)
+    assert "before-fails" in text
+    assert "before-after-same-command" in text
 
 
 def test_validate_cli_writes_report(tmp_path: Path) -> None:

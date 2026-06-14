@@ -59,6 +59,8 @@ def validate_task(
             ValidationCheck("after-passes", after.passed, f"after exit code {after.exit_code}")
         )
 
+    _add_run_consistency_checks(report)
+
     return report
 
 
@@ -80,6 +82,47 @@ def _add_manifest_checks(
     report.checks.append(
         ValidationCheck("manifest-repo-exists", repo_path.is_dir(), str(repo_path))
     )
+
+
+def _add_run_consistency_checks(report: ValidationReport) -> None:
+    if report.before:
+        report.checks.append(
+            ValidationCheck(
+                "before-task",
+                report.before.task == report.manifest.name,
+                report.before.task,
+            )
+        )
+        report.checks.append(
+            ValidationCheck(
+                "before-command",
+                report.before.command == report.manifest.test_command,
+                report.before.command,
+            )
+        )
+    if report.after:
+        report.checks.append(
+            ValidationCheck(
+                "after-task",
+                report.after.task == report.manifest.name,
+                report.after.task,
+            )
+        )
+        report.checks.append(
+            ValidationCheck(
+                "after-command",
+                report.after.command == report.manifest.test_command,
+                report.after.command,
+            )
+        )
+    if report.before and report.after:
+        report.checks.append(
+            ValidationCheck(
+                "before-after-same-command",
+                report.before.command == report.after.command,
+                report.before.command,
+            )
+        )
 
 
 def validation_markdown(report: ValidationReport) -> str:

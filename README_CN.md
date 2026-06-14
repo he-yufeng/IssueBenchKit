@@ -97,7 +97,7 @@ patchcontext scan --repo ./qwen-code --issue qwen-copy-context.md
 - 内置 Python、JavaScript、真实 MCP PR 提炼版 demo workspace
 - `issuebench.json` 任务清单
 - before / after 评分
-- `validate` 任务质量门禁：证明 before 失败、after 通过
+- `validate` 任务质量门禁：证明 before 失败、after 通过，并确认两边使用同一条任务命令
 - JSONL 和单文件 HTML 报告
 - 给 coding agent / PatchContext 用的 Markdown 任务上下文
 
