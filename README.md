@@ -122,6 +122,17 @@ The first version is intentionally small:
 It does not generate tests automatically, mutate repositories, or claim that one command can
 evaluate every language ecosystem.
 
+## Roadmap
+
+The scope above is deliberate. The next steps keep that small core and grow the parts that make a task easier to author and trust:
+
+- **A task linter** — `issuebenchkit lint <task>` that flags a manifest before it runs: missing before/after commands, a task command that isn't reproducible, or a workspace that doesn't build, so a bad task is caught at authoring time.
+- **More demo workspaces** — runnable Go and Rust demos alongside the Python/JS/MCP ones, since the validation contract (before fails, after passes, same command) is language-agnostic and only the demo is missing.
+- **Cost and timing in the report** — record wall-clock and, when an agent runs the task, token usage, so a before/after report shows the price of a fix and not only whether it passed.
+- **Task packs** — group related tasks into a named set that runs and scores together, for tracking a small private suite over time.
+
+The line it won't cross stays the same: no automatic test generation, no repo mutation, no "one command evaluates every ecosystem" claim.
+
 ## Related projects
 
 - [AgentProbe](https://github.com/he-yufeng/AgentProbe) — a pytest plugin for regression-testing AI agents

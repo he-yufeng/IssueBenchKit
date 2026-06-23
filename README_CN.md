@@ -115,6 +115,17 @@ patchcontext scan --repo ./qwen-code --issue qwen-copy-context.md
 
 它不会自动生成测试，也不会自动修改你的仓库。这个边界是故意保留的：benchmark 最重要的是可信，而不是看起来很“自动化”。
 
+## 后续规划
+
+上面的边界是刻意的。接下来的方向是保住这个小内核，把「让一道题更好写、更可信」的部分补全：
+
+- **任务 linter**：`issuebenchkit lint <task>`，在跑之前就检出问题清单——缺 before/after 命令、任务命令不可复现、workspace 起不来，把坏任务挡在编写阶段。
+- **更多 demo workspace**：在 Python/JS/MCP 之外补上可运行的 Go、Rust demo；验证契约（before 失败、after 通过、同一条命令）本来就与语言无关，缺的只是 demo。
+- **报告里加成本与耗时**：记录墙钟时间，以及当 Agent 来跑任务时的 token 用量，让 before/after 报告不只说明「过没过」，也说明一次修复的代价。
+- **任务包**：把相关任务归成一个命名集合，一起跑、一起评分，方便长期跟踪一个小型私有题库。
+
+不会越过的那条线不变：不自动生成测试、不改你的仓库、不宣称「一条命令评测所有生态」。
+
 ## 一句话传播
 
 把你的真实 bug 变成一个小型 SWE-bench。
