@@ -1,6 +1,16 @@
-<p align="right"><a href="README_CN.md">中文文档</a></p>
+<div align="center">
 
-# IssueBenchKit
+<img src="docs/banner.png" alt="IssueBenchKit — turn a real GitHub issue into a coding-agent benchmark task" width="100%">
+
+[![PyPI](https://img.shields.io/pypi/v/issuebenchkit.svg)](https://pypi.org/project/issuebenchkit/)
+[![Python](https://img.shields.io/pypi/pyversions/issuebenchkit.svg)](https://pypi.org/project/issuebenchkit/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+[**Quick Start**](#quick-start) · [**How It Works**](#how-it-works) · [**Scoring**](#scoring) · [中文](README_CN.md)
+
+</div>
+
+<p align="center"><img src="docs/demo.png" alt="issuebench init and run" width="620"></p>
 
 Turn a real GitHub issue, pull request, or local bug into a small coding-agent benchmark task.
 

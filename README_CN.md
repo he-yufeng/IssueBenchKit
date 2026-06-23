@@ -1,4 +1,16 @@
-# IssueBenchKit
+<div align="center">
+
+<img src="docs/banner.png" alt="IssueBenchKit — 把真实 GitHub issue 变成可复现的 coding-agent benchmark 任务" width="100%">
+
+[![PyPI](https://img.shields.io/pypi/v/issuebenchkit.svg)](https://pypi.org/project/issuebenchkit/)
+[![Python](https://img.shields.io/pypi/pyversions/issuebenchkit.svg)](https://pypi.org/project/issuebenchkit/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+[**快速开始**](#快速开始) · [**工作原理**](#工作原理) · [**评分**](#评分) · [English](README.md)
+
+</div>
+
+<p align="center"><img src="docs/demo.png" alt="issuebench init and run" width="620"></p>
 
 把一个真实 GitHub issue、PR 或本地 bug，打包成可以复现、可以评分、可以分享的 coding-agent benchmark 任务。
 
