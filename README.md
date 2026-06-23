@@ -112,6 +112,13 @@ The first version is intentionally small:
 It does not generate tests automatically, mutate repositories, or claim that one command can
 evaluate every language ecosystem.
 
+## Related projects
+
+- [AgentProbe](https://github.com/he-yufeng/AgentProbe) — a pytest plugin for regression-testing AI agents
+- [LiteBench](https://github.com/he-yufeng/LiteBench) — a pip-installable benchmark runner for LLMs and agents
+- [CodeJoust](https://github.com/he-yufeng/CodeJoust) — pit coding agents against the same bug and score the patches
+- [agentcikit](https://github.com/he-yufeng/agentcikit) — CLI tools for AI-agent, MCP, and CI evidence and safety
+
 ## License
 
 MIT
