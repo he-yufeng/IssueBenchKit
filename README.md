@@ -133,12 +133,14 @@ The scope above is deliberate. The next steps keep that small core and grow the 
 
 The line it won't cross stays the same: no automatic test generation, no repo mutation, no "one command evaluates every ecosystem" claim.
 
-## Related projects
+## Related Projects
 
-- [AgentProbe](https://github.com/he-yufeng/AgentProbe) — a pytest plugin for regression-testing AI agents
-- [LiteBench](https://github.com/he-yufeng/LiteBench) — a pip-installable benchmark runner for LLMs and agents
-- [CodeJoust](https://github.com/he-yufeng/CodeJoust) — pit coding agents against the same bug and score the patches
-- [agentcikit](https://github.com/he-yufeng/agentcikit) — CLI tools for AI-agent, MCP, and CI evidence and safety
+IssueBenchKit is part of how I benchmark coding agents. A few related projects:
+
+- **[CoreCoder](https://github.com/he-yufeng/CoreCoder)** — want to understand how a coding agent really works? Read the whole ~1k-line engine end to end, not a black box.
+- **[RepoWiki](https://github.com/he-yufeng/RepoWiki)** — dropped into an unfamiliar codebase? It gives you a guided wiki and a where-to-start reading path, a self-hostable DeepWiki alternative.
+- **[GitSense](https://github.com/he-yufeng/GitSense)** — want to contribute to open source? It finds issues worth your time and gauges whether your PR will get merged.
+- **[AgentProbe](https://github.com/he-yufeng/AgentProbe)** — catch when your LLM agent silently changes behavior: snapshot tests for agents, run in pytest.
 
 ## License
 
